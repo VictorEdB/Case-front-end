@@ -126,7 +126,7 @@ function App() {
             <th>Nome</th>
             <th>ano</th>
             <th>genero</th>
-            {/* <th>Ações</th> */}
+            <th>Ações</th>
           </tr>
         </thead>
 
