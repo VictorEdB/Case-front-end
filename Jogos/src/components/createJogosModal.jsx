@@ -1,4 +1,5 @@
 import { Modal, Button, Form } from 'react-bootstrap'
+
 function CreateModal(props) {
   return(
     <div
@@ -7,6 +8,7 @@ function CreateModal(props) {
     >
       <Modal show={props.ModalOpen}>
         <Form onSubmit={(event) => {
+          
           props.createJogos(event)
         }}>
         <Modal.Header closeButton onClick={props.handleClose}>
@@ -14,23 +16,23 @@ function CreateModal(props) {
         </Modal.Header>
 
         <Modal.Body>
-          <Form.Group controlId="Nome">
+          <Form.Group controlId="nome">
             <Form.Label>
               Nome
             </Form.Label>
             <Form.Control type="text" />
           </Form.Group>
 
-          <Form.Group controlId="ano">
+          <Form.Group controlId="genero">
             <Form.Label>
-              ano
+              Genero
             </Form.Label>
             <Form.Control type="text" />
           </Form.Group>
 
-          <Form.Group controlId="genero">
+          <Form.Group controlId="ano">
             <Form.Label>
-              genero
+              Ano
             </Form.Label>
             <Form.Control type="number" />
           </Form.Group>
@@ -45,5 +47,8 @@ function CreateModal(props) {
     </div>
   )
 }
+
+
+
 
 export default CreateModal

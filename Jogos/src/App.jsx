@@ -4,6 +4,7 @@ import CreateModal from './components/CreateJogosModal'
 import UpdateModal from './components/UpdateJogosModal'
 import Api from './api/Api'
 
+
 function App() {
   const [jogos, setJogos] = useState()
   const [CreateModalOpen, setCreateModalOpen] = useState(false)
@@ -50,17 +51,17 @@ function App() {
       event.preventDefault()
 
       const req = event.currentTarget.elements
-
+      
       await Api().createJogos(
-        req.nome.value, req.ano.value, Number(req.genero.value)
+        req.nome.value, req.genero.value, Number(req.ano.value)
       ).then(data => {
         return data.json()
       }).then(res => {
-        setFilmes([...jogos, {
-          id: res.Id,
+        setJogos([...jogos, {
+          
           nome: req.nome.value,
-          ano: req.ano.value,
-          genero: Number(req.genero.value)
+          ano: Number(req.ano.value),
+          genero: req.genero.value
         }])
 
         setCreateModalOpen(false)
@@ -77,7 +78,7 @@ function App() {
       const req = event.currentTarget.elements
 
       await Api().updateJogos(
-        selectedJogos.id, req.nome.value, req.ano.value, Number(req.genero.value)
+        selectedJogos.id, req.nome.value, Number(req.ano.value), req.genero.value
       )
 
       const formattedJogos = jogos.map(game => {
@@ -85,8 +86,11 @@ function App() {
           return {
             id: selectedJogos.id,
             nome: req.nome.value,
-            ano: req.ano.value,
-            genero: Number(req.genero.value)
+            ano: Number(req.ano.value),
+            genero: req.genero.value
+            
+            
+            
           }
         }
 
@@ -102,6 +106,7 @@ function App() {
   }
 
   return(
+  
     <> 
     <Container
       className="
@@ -110,22 +115,15 @@ function App() {
         align-items-start
         justify-content-center
         h-100
-        w-100
-        "
+        w-100"
     >
-      <Button
-        className="mb-8"
-        onClick={handleShowCreateModal}
-        variant='primary'>
-        Adicionar Jogos
-      </Button>
-     
-      <Table striped bordered hover>
+
+      <Table striped bordered hover className='tabela'>
         <thead>
           <tr>
             <th>Nome</th>
-            <th>ano</th>
-            <th>genero</th>
+            <th>Genero</th>
+            <th>Ano</th>   
             <th>Ações</th>
           </tr>
         </thead>
@@ -134,8 +132,8 @@ function App() {
           {jogos && jogos.map(jogos=> (
             <tr key={jogos.id}>
               <td>{jogos.nome}</td>
-              <td>{jogos.ano}</td>
               <td>{jogos.genero}</td>
+              <td>{jogos.ano}</td>
               <td>
                 <Button onClick={() => deleteJogos(jogos.id)} variant='danger'>
                   Excluir
@@ -156,6 +154,12 @@ function App() {
           ))}
         </tbody>
       </Table>
+      <Button
+        className="mb-8"
+        onClick={handleShowCreateModal}
+        variant='primary'>
+        Adicionar Jogos
+      </Button>
     </Container>
     <CreateModal ModalOpen={CreateModalOpen} handleClose={handleCloseCreateModal} createJogos={createJogos} />
     {selectedJogos && (

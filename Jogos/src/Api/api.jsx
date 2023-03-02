@@ -19,7 +19,7 @@ const Api = () => {
        })
       },
       createJogos (nome, ano, genero) {
-        return fetch(`${url}/jogos`, {
+        return fetch(`${url}/jogo`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -33,8 +33,8 @@ const Api = () => {
           )
        })
       },
-      updateJogos(Id, nome, ano, genero) {
-        return fetch(`${url}/jogos/${Id}`, {
+      updateJogos( nome, ano, genero) {
+        return fetch(`${url}/jogo`, {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json'
