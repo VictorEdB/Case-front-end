@@ -11,7 +11,7 @@ const Api = () => {
           })
       },
       deleteJogos (Id) {
-        return fetch(`${url}/jogos/${Id}`, {
+        return fetch(`${url}/jogo/${Id}`, {
           method: 'DELETE',
           headers: {
               'Content-Type': 'application/json'
@@ -26,15 +26,15 @@ const Api = () => {
           },
           body: JSON.stringify(
             {
-              nome: nome,
+              nome: nome ,
               ano: ano,
               genero: genero
             }
           )
        })
       },
-      updateJogos( nome, ano, genero) {
-        return fetch(`${url}/jogo`, {
+      updateJogos(Id, nome, ano, genero) {
+        return fetch(`${url}/jogo/${Id}`, {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json'

@@ -1,9 +1,8 @@
 import { Table, Container, Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
-import CreateModal from './components/CreateJogosModal'
-import UpdateModal from './components/UpdateJogosModal'
+import CreateModal from './components/CreateJogosModal.jsx'
+import UpdateModal from './components/UpdateJogosModal.jsx'
 import Api from './api/Api'
-
 
 function App() {
   const [jogos, setJogos] = useState()
@@ -51,17 +50,17 @@ function App() {
       event.preventDefault()
 
       const req = event.currentTarget.elements
-      
+
       await Api().createJogos(
         req.nome.value, req.genero.value, Number(req.ano.value)
       ).then(data => {
         return data.json()
       }).then(res => {
         setJogos([...jogos, {
-          
+          id: res.Id,
           nome: req.nome.value,
-          ano: Number(req.ano.value),
-          genero: req.genero.value
+          genero: req.genero.value,
+          ano: Number(req.ano.value)
         }])
 
         setCreateModalOpen(false)
@@ -78,19 +77,16 @@ function App() {
       const req = event.currentTarget.elements
 
       await Api().updateJogos(
-        selectedJogos.id, req.nome.value, Number(req.ano.value), req.genero.value
+        selectedJogos.id, req.nome.value, req.genero.value, Number(req.ano.value)
       )
 
       const formattedJogos = jogos.map(game => {
         if(game.id === selectedJogos.id) {
           return {
             id: selectedJogos.id,
-            nome: req.nome.value,
-            ano: Number(req.ano.value),
-            genero: req.genero.value
-            
-            
-            
+            nome:  req.nome.value,
+            genero: req.genero.value,
+            ano: Number(req.ano.value)
           }
         }
 
@@ -106,7 +102,6 @@ function App() {
   }
 
   return(
-  
     <> 
     <Container
       className="
@@ -115,15 +110,17 @@ function App() {
         align-items-start
         justify-content-center
         h-100
-        w-100"
+        w-100
+        "
     >
-
-      <Table striped bordered hover className='tabela'>
+      
+     
+      <Table striped bordered hover  className='tabela'>
         <thead>
           <tr>
             <th>Nome</th>
             <th>Genero</th>
-            <th>Ano</th>   
+            <th>Ano</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -153,17 +150,17 @@ function App() {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </Table> 
       <Button
         className="mb-8"
         onClick={handleShowCreateModal}
         variant='primary'>
-        Adicionar Jogos
+        Adicionar Jogo
       </Button>
     </Container>
     <CreateModal ModalOpen={CreateModalOpen} handleClose={handleCloseCreateModal} createJogos={createJogos} />
     {selectedJogos && (
-      <UpdateModal ModalOpen={UpdateModalOpen} handleClose={handleCloseUpdateModal} updatejogos={updateJogos} jogos={selectedJogos} />
+      <UpdateModal ModalOpen={UpdateModalOpen} handleClose={handleCloseUpdateModal} updateJogos={updateJogos} jogos={selectedJogos} />
     )}
     </>
   )
